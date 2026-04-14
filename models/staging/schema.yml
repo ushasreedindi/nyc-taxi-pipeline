@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: stg_taxi_trips
+    description: "Cleaned and transformed NYC taxi trips from raw layer"
+    columns:
+      - name: pickup_datetime
+        description: "Trip pickup timestamp"
+        tests:
+          - not_null
+
+      - name: fare_amount
+        description: "Trip fare in dollars"
+        tests:
+          - not_null
+
+      - name: trip_distance_miles
+        description: "Trip distance in miles"
+        tests:
+          - not_null
+
+      - name: passenger_count
+        description: "Number of passengers"
+        tests:
+          - not_null
+
+      - name: payment_type
+        description: "Payment method"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1, 2, 3, 4, 5]
+
+  - name: mart_daily_summary
+    description: "Daily aggregated trip metrics for analytics"
+    columns:
+      - name: pickup_date
+        description: "The date of trips"
+        tests:
+          - not_null
+          # remove the unique test from here
+
+      - name: total_trips
+        description: "Total number of trips that day"
+        tests:
+          - not_null
+
+      - name: total_revenue
+        description: "Total fare revenue that day"
+        tests:
+          - not_null
